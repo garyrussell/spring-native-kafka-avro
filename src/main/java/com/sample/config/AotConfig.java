@@ -3,6 +3,9 @@ package com.sample.config;
 import com.sample.avro.Address;
 import io.confluent.kafka.schemaregistry.client.rest.entities.ErrorMessage;
 import io.confluent.kafka.schemaregistry.client.rest.entities.SchemaString;
+import io.confluent.kafka.schemaregistry.client.rest.entities.SchemaTypeConverter;
+import io.confluent.kafka.schemaregistry.client.rest.entities.requests.RegisterSchemaRequest;
+import io.confluent.kafka.schemaregistry.client.rest.entities.requests.RegisterSchemaResponse;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import io.confluent.kafka.serializers.subject.TopicNameStrategy;
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
@@ -35,6 +38,9 @@ import org.springframework.nativex.hint.TypeHint;
                 SpecificAvroSerde.class,
                 KafkaAvroSerializer.class,
                 ErrorMessage.class,
+                RegisterSchemaRequest.class,
+                RegisterSchemaResponse.class,
+                SchemaTypeConverter.class,
                 SchemaString.class
         })
 )

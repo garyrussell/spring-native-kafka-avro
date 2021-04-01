@@ -4,6 +4,7 @@ import com.sample.avro.Address;
 import com.sample.model.AddrReq;
 import com.sample.topology.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.config.StreamsBuilderFactoryBean;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -14,13 +15,19 @@ public class KafkaController {
 
     private final Producer producer;
 
+    private final StreamsBuilderFactoryBean fb;
+
     @Autowired
-    KafkaController(Producer producer) {
+    KafkaController(Producer producer, StreamsBuilderFactoryBean fb) {
         this.producer = producer;
+        this.fb = fb;
     }
 
     @PostMapping
     public void sendMessageToKafkaTopic(@RequestBody AddrReq addr) {
+        if (!this.fb.isRunning()) {
+            fb.start();
+        }
         Address address = Address.newBuilder().setAddressId(UUID.randomUUID().toString()).setAddressPostcode(addr.getPostcode()).build();
         this.producer.sendMessage(address);
     }
